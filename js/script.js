@@ -1,4 +1,5 @@
 const numberButtons = document.querySelectorAll("div > .number");
+const operators = document.querySelectorAll("div > .operator");
 const screen = document.querySelector(".screen");
 
 let firstNumber;
@@ -10,6 +11,17 @@ numberButtons.forEach((button) => {
         "click",
         (event) => (screen.textContent += event.target.textContent)
     );
+});
+
+operators.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        const lastValue =
+            screen.textContent[screen.textContent.length - 1];
+
+        if (screen.textContent.length !== 0 && lastValue !== " ") {
+            screen.textContent += ` ${event.target.textContent} `;
+        }
+    });
 });
 
 function operate(firstNumber, operator, secondNumber) {
