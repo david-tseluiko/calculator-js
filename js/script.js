@@ -28,6 +28,11 @@ numberButtons.forEach((button) => {
 
 operators.forEach((button) => {
     button.addEventListener("click", (event) => {
+        if (isResultDisplayed && screen.textContent !== "NaN") {
+            isResultDisplayed = false;
+            isOperatorClicked = false;
+        }
+
         if (screen.textContent.length !== 0 && isOperatorClicked === false) {
             screen.textContent += ` ${event.target.textContent} `;
             isOperatorClicked = true;
@@ -53,9 +58,12 @@ clear.addEventListener("click", () => {
 
 deleteButton.addEventListener("click", () => {
     if (screen.textContent.length !== 0) {
-        screen.textContent = screen.textContent.slice(0, screen.textContent.length - 1);
+        screen.textContent = screen.textContent.slice(
+            0,
+            screen.textContent.length - 1
+        );
     }
-})
+});
 
 function operate(firstNumber, operator, secondNumber) {
     firstNumber = +firstNumber;
