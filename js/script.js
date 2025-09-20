@@ -1,27 +1,33 @@
 const numberButtons = document.querySelectorAll(".buttons > .number");
 const operators = document.querySelectorAll(".buttons > .operator");
 const equals = document.querySelector(".buttons > .equals");
+const clear = document.querySelector(".buttons > .clear");
 
 const screen = document.querySelector(".screen");
 
 let isOperatorClicked = false;
+let isResultDisplayed = false;
 
 let firstNumber;
 let secondNumber;
 let operator;
 
 numberButtons.forEach((button) => {
-    button.addEventListener(
-        "click",
-        (event) => (screen.textContent += event.target.textContent)
-    );
+    button.addEventListener("click", (event) => {
+        if (isResultDisplayed) {
+            screen.textContent = "";
+
+            isOperatorClicked = false;
+            isResultDisplayed = false;
+        }
+
+        screen.textContent += event.target.textContent;
+    });
 });
 
 operators.forEach((button) => {
     button.addEventListener("click", (event) => {
-        const lastValue = screen.textContent[screen.textContent.length - 1];
-
-        if (screen.textContent.length !== 0 && lastValue !== " ") {
+        if (screen.textContent.length !== 0 && isOperatorClicked === false) {
             screen.textContent += ` ${event.target.textContent} `;
             isOperatorClicked = true;
         }
@@ -29,10 +35,19 @@ operators.forEach((button) => {
 });
 
 equals.addEventListener("click", () => {
-    if (screen.textContent[screen.textContent.length - 1] !== " " && isOperatorClicked) {
+    if (
+        screen.textContent[screen.textContent.length - 1] !== " " &&
+        isOperatorClicked
+    ) {
         const operands = screen.textContent.split(" ");
-        console.log(operate(operands[0], operands[1], operands[2]));
+        operate(operands[0], operands[1], operands[2]);
+
+        isResultDisplayed = true;
     }
+});
+
+clear.addEventListener("click", () => {
+    screen.textContent = "";
 });
 
 function operate(firstNumber, operator, secondNumber) {
@@ -51,21 +66,22 @@ function operate(firstNumber, operator, secondNumber) {
 }
 
 function add(a, b) {
-    return a + b;
+    screen.textContent = a + b;
 }
 
 function subtract(a, b) {
-    return a - b;
+    screen.textContent = a - b;
 }
 
 function multiply(a, b) {
-    return a * b;
+    screen.textContent = a * b;
 }
 
 function divide(a, b) {
     if (b === 0) {
-        return NaN;
+        screen.textContent = NaN;
+        return 0;
     }
 
-    return a / b;
+    screen.textContent = a / b;
 }
