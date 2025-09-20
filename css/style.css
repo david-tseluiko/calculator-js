@@ -35,6 +35,8 @@ body {
 
     display: flex;
     align-items: center;
+
+    word-break: break-all;
 }
 
 .buttons {
