@@ -1,6 +1,16 @@
+const numberButtons = document.querySelectorAll("div > .number");
+const screen = document.querySelector(".screen");
+
 let firstNumber;
 let secondNumber;
 let operator;
+
+numberButtons.forEach((button) => {
+    button.addEventListener(
+        "click",
+        (event) => (screen.textContent += event.target.textContent)
+    );
+});
 
 function operate(firstNumber, operator, secondNumber) {
     if (operator === "+") {
