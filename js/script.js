@@ -57,6 +57,10 @@ clear.addEventListener("click", () => {
 });
 
 deleteButton.addEventListener("click", () => {
+    if (screen.textContent === "NaN") {
+        screen.textContent = '';
+    }
+    
     if (screen.textContent.length !== 0) {
         screen.textContent = screen.textContent.slice(
             0,
